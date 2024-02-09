@@ -52,17 +52,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 @csrf
                 @method('PUT')
 
-                <div class="form-group">
-                  <label for="sasaran_id">Absen</label>
-                </div>
+                <input type="hidden" name="id" value="{{ $data->id }}">
+                <input type="hidden" name="id_anggota" id="id_anggota" value="{{ $data->id_anggota }}">
+                <input type="hidden" id="test" value="{{ $data->keterangan }}">
+
+                
                 {{-- <div class="form-group">
                     <input type="text" name="sasaran" class="form-control mb-3" value="{{ $kinerja->sasaran->sasaran }}" required>
                 </div> --}}
                 <div class="form-group">
-                    <input type="text" name="nama" class="form-control" value="{{ $data->datanama }}" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="kelas" class="form-control" value="{{ $data->datakelas }}" required>
+                  <label for="nsms">Nama</label>
+                  <select  id="anggota" class="form-control"  disabled>
+                  {{-- @foreach($anggota as  $data)
+                  <option value="{{ $data->id_anggota }}">{{ $data->nama }}</option>
+                  @endforeach --}}
+                </select>         
+                
+              </div>
+              
+              <div class="form-group">
+                <label for="keterangan">Keterangan</label>
+                  <select name="keterangan" id="ket" class="form-control" value="{{ $data->keterangan }}">
+                    <option value="hadir">Hadir</option>
+                    <option value="sakit">Sakit</option>
+                    <option value="izin">Izin</option>
+                    <option value="alpa">Alfa</option>
+                  </select>
                 </div>
                 <div class="form-group">
                    <button type="submit" class="btn btn-primary">Simpan</button>
@@ -95,29 +110,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED SCRIPTS -->
 @include('Partials.script')
-
+<script>
+  var anggota = $('#id_anggota').val();
+  var pilihan = `<option value="`+ anggota + `">{{ $data->nama }}</option>`;
+  // console.log($('#test').val());
+  console.log(anggota);
+    $('#ket').val( $('#test').val()) .change();
+    // $('#ket').change();
+    $('#anggota').val( $('#id_anggota').val() ).change();
+    $('#anggota').append(pilihan);
+</script>
 </body>
-</html>
+</html> 
 
-{{-- 
-@extends('template.dashboard')
-@section('title', 'edit')
-@section('content')
-<form action="{{ route('kinerjas.update', $kinerja->id) }}" method="post">
-    @csrf
-    @method('PUT')
-    <div class="form-group">
-        <label for="indikator_kinerja">Indikator Kinerja</label>
-        <input type="text" name="indikator_kinerja" class="form-control" value="{{ $kinerja->indikator_kinerja }}" required>
-    </div>
-    <div class="form-group">
-        <label for="sasaran">Sasaran</label>
-        <input type="text" name="sasaran" class="form-control mb-3" value="{{ $kinerja->sasaran }}" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Simpan</button>
-</form>
-
-@endsection
-
-@section('inline_script')
-@endsection     --}}

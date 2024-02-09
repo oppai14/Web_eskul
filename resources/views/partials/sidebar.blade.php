@@ -35,34 +35,25 @@
       {{-- Halaman Sasaran     --}}
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              @can ('dekan')
-              {{-- <a href="{{ route('sasarans.index') }}" class="nav-link {{ Request::is('sasarans') ? 'active' : '' }}"> --}}
+              
+              <a href="{{ route('anggota.index') }}" class="nav-link {{ Request::is('anggota') ? 'active' : '' }}">
                 <i class="bi bi-folder2-open"></i>
-                <p>Sasaran</p>
+                <p>Anggota</p>
               </a>
-              @endcan
+    
             </li>
            </ul>
-          <ul class="nav nav-treeview">
+           <ul class="nav nav-treeview">
             <li class="nav-item">
-              @can ('wakildekan')
-              {{-- <a href="{{ route('sasarans.index') }}" class="nav-link {{ Request::is('sasarans') ? 'active' : '' }}"> --}}
+              
+              <a href="{{ route('absen.index') }}" class="nav-link {{ Request::is('absen') ? 'active' : '' }}">
                 <i class="bi bi-folder2-open"></i>
-                <p>Sasaran</p>
+                <p>Absen</p>
               </a>
-              @endcan
+    
             </li>
            </ul>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              @can ('admin')
-              {{-- <a href="{{ route('sasarans.index') }}" class="nav-link {{ Request::is('sasarans') ? 'active' : '' }}"> --}}
-                <i class="bi bi-folder2-open"></i>
-                <p>Sasaran</p>
-              </a>
-              @endcan
-            </li>
-           </ul>
+         
       {{-- End Halaman Sasarans --}}
 
       {{-- Halaman Kinerja     --}}

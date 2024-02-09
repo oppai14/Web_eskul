@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Absen; // Pastikan untuk menyesuaikan nama model absen jika Anda memiliki model dengan nama lain
+use App\Models\Vabsen; // Pastikan untuk menyesuaikan nama model absen jika Anda memiliki model dengan nama lain
+use App\Models\Vanggota; // Pastikan untuk menyesuaikan nama model absen jika Anda memiliki model dengan nama lain
 
 class AbsenController extends Controller
 {
     // Menampilkan daftar absen
     public function index()
     {
-        $absenList = Absen::all();
+        $absenList = Vabsen::all();
         return view('absen.index', ['absenList' => $absenList]);
         // return view('absen.index');
     }
@@ -18,7 +20,8 @@ class AbsenController extends Controller
     // Menampilkan formulir untuk membuat absen baru
     public function create()
     {
-        return view('absen.create');
+        $datas = Vanggota::all(); 
+        return view('absen.create', ['datas' => $datas]);
     }
 
     public function dataTable(Request $request)
@@ -51,24 +54,28 @@ class AbsenController extends Controller
     // Menampilkan formulir untuk mengedit absen berdasarkan ID
     public function edit($id)
     {
-        $absenList = Absen::findOrFail($id);
-        return view('absen.edit', ['data' => $absenList]);
+        $anggota = Vanggota::all(); 
+        $absenList = Vabsen::findOrFail($id);
+        return view('absen.edit', ['data' => $absenList, 'anggota' => $anggota]);
     }
 
     // Memperbarui absen berdasarkan ID
     public function update(Request $request, Absen $data)
     {
-        $request->validate([
-            'nama' => 'required',
-            'kelas' => 'required',
+        $nilai = [
+            'id_anggota'      => $request->id_anggota,
+            'keterangan'        => $request->keterangan,
+        ];
+        // var_dump($nilai); die();
+    
+        // Memperbarui data dengan menggunakan kondisi where id = $request->id
+        $data->where('id', $request->id)->update($nilai);
+    
+        // Redirect setelah pembaruan
+        return redirect()->route('absen.index')->with('success', 'Update Berhasil');
 
-        ]);
-
-        $data->update($request->all());
-
-        return redirect()->route('absen.index')
-        ->with('success', 'Data Target berhasil diperbarui! ');
     }
+
 
     // Menghapus absen berdasarkan ID
     public function destroy($id)

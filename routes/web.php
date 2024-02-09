@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\AnggotaController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +17,9 @@ use App\Http\Controllers\AbsenController;
 
 
 Route::resource('absen',AbsenController::class);
-// Route::get('/absen/dataTable', [AbsenController::class, 'dataTable'])->name('absen.dataTable');
+Route::resource('anggota', AnggotaController::class);
+// Route::put('/pendaftaran/{id}', 'PendaftaranController@update')->name('pendaftaran.update');
+
 
 
 

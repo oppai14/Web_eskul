@@ -29,8 +29,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('absen.index') }}">Home</a></li>
-              <li class="breadcrumb-item active">Tambah Absen</li>
+              <li class="breadcrumb-item"><a href="{{ route('anggota.index') }}">Home</a></li>
+              <li class="breadcrumb-item active">Tambah Anggota</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -43,29 +43,47 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="card card-info card-outline">
             <div class="card-header">
 
-                <h4>Tambah Absen</h4>
+                <h4>Tambah Anggota</h4>
 
             </div>
           <div class="card-body">
-           <form action="{{ route('absen.store') }}" method="post">
+           <form action="{{ route('anggota.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                  <label for="nama">Nama</label>
-                  <select name="id_anggota" id="">
-                    @foreach($datas as $data)
-                    <option value="{{ $data->id }}"> {{ $data->nama }}</option>
-                    @endforeach
-                  </select>
-                    {{-- <input type="text" name="nama" class="form-control mb-3" placeholder="nama" autocomplete="off" autofocus required> --}}
+                  <label for="nis">Nis</label>
+                  <input type="text" name="nis" class="form-control mb-3" placeholder="nama" autocomplete="off" autofocus required>
                 </div>
-                  <div class="form-group">
-                    <label for="keterangan">Keterangan</label>
+                <div class="form-group">
+                  <label for="nama">Nama</label>
+                    <input type="text" name="nama" class="form-control mb-3" placeholder="nama" autocomplete="off" autofocus required>
+                </div>
+                <div class="form-group">
+                    <label for="keterangan">Jenis Kelamin</label>
                     <select name="keterangan" id="" class="form-control">
-                      <option value="hadir">Hadir</option>
-                      <option value="sakit">Sakit</option>
-                      <option value="izin">Izin</option>
-                      <option value="alpa">Alfa</option>
+                      <option value="L">Laki - Laki</option>
+                      <option value="P">Perempuan</option>
                     </select>
+                  </div>  
+                <div class="form-group">
+                    <label for="id_kelas">Kelas</label>
+                    <select name="id_kelas" id="" class="form-control">
+                        @foreach($datas as $data){
+                            <option value="{{ $data->id }}">{{ $data->nama }}</option>
+
+                        }
+                        @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="foto">Foto</label>
+                    {{-- <form action="upload.php" method="post" enctype="multipart/form-data"> --}}
+                      <input type="file" name="foto" accept="image/*">
+                      {{-- <input type="submit" value="Upload Foto"> --}}
+
+                  </div>
+                  <div class="form-group">
+                    <label for="nama">No telephone</label>
+                      <input type="text" name="no_telp" class="form-control mb-3" placeholder="No Telephone" autocomplete="off" autofocus required>
                   </div>
                 <div class="form-group">
                    <button type="submit" class="btn btn-primary">Simpan</button>
