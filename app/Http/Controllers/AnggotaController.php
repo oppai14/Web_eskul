@@ -62,6 +62,7 @@ class AnggotaController extends Controller
     public function edit($id){
         $anggota = anggota::findOrFail($id);
         $kelas = kelas::all();
+
         return view('anggota.edit', ['data' => $anggota, 'kelas' => $kelas]);
 
 
@@ -69,23 +70,41 @@ class AnggotaController extends Controller
 
     //kirim data edit
     public function update(Request $request, anggota $data)
-    {
-        // Mengambil nilai dari request
-        $nilai = [
-            'nis'       => $request->nis,
-            'nama'      => $request->nama,
-            'jk'        => $request->jk,
-            'foto'      => $request->foto,
-            'id_kelas'     => $request->kelas,
-            'no_telp'   => $request->no_telp,
-        ];
-    
-        // Memperbarui data dengan menggunakan kondisi where id = $request->id
-        $data->where('id', $request->id)->update($nilai);
-    
-        // Redirect setelah pembaruan
-        return redirect()->route('anggota.index')->with('success', 'Update Berhasil');
+{
+    $request->validate([
+        'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // sesuaikan dengan kebutuhan Anda
+    ]);
+
+    if ($request->hasFile('foto')) {
+        $foto = $request->file('foto');
+        $nama_file = time() . '_' . $foto->getClientOriginalName();
+        $lokasi = public_path('uploads');
+        $foto->move($lokasi, $nama_file);
+        echo "Foto berhasil diunggah.";
+        $request['foto'] = $nama_file; // Pindahkan ini ke dalam blok if
+    } else {
+        echo "Gagal mengunggah foto.";
+        return redirect()->back()->with('error', 'Gagal mengunggah foto.');
     }
+
+    $nilai = [
+        'nis'       => $request->nis,
+        'nama'      => $request->nama,
+        'jk'        => $request->jk,
+        'foto'      => $nama_file,
+        'id_kelas'  => $request->kelas,
+        'no_telp'   => $request->no_telp,
+    ];
+    // var_dump($nilai);die();
+
+    // Memperbarui data dengan menggunakan kondisi where id = $request->id
+    if ($data->where('id', $request->id)->update($nilai)) {
+        return redirect()->route('anggota.index')->with('success', 'Update Berhasil');
+    } else {
+        return redirect()->back()->with('error', 'Gagal memperbarui data.');
+    }
+}
+
 
     //hapus data
     public function destroy($id)

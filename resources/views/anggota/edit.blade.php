@@ -48,7 +48,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             </div>
           <div class="card-body">
-            <form action="{{ route('anggota.update', $data->id) }}" method="post">
+            <form action="{{ route('anggota.update', $data->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -73,7 +73,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
                 <div class="form-group">
                     <label for="foto">Foto</label>
-                    <input type="text" name="foto" class="form-control" value="{{ $data->foto }}" required>
+                    {{-- <input type="text" name="foto_asa" class="form-control" value="{{ $data->foto }}" required> --}}
+                    <input type="file" name="foto" accept="image/*">
+      
                 </div>
                 <div class="form-group">
                     <label for="id_kelas">Kelas</label>

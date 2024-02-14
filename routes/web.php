@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\AnggotaController;
-
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +15,7 @@ use App\Http\Controllers\AnggotaController;
 |
 */
 
-
+Route::resource('dashboard',DashboardController::class);
 Route::resource('absen',AbsenController::class);
 Route::resource('anggota', AnggotaController::class);
 // Route::put('/pendaftaran/{id}', 'PendaftaranController@update')->name('pendaftaran.update');
